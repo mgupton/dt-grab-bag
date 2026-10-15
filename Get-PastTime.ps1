@@ -3,7 +3,10 @@ function Get-PastTime {
     param(
         [Parameter(Mandatory = $true, Position = 0)]
         [ValidatePattern('^\d*\.?\d+[mhdMHD]$')]
-        [string]$RelativeTime
+        [string]$RelativeTime,
+
+        [Parameter(Mandatory = $false)]
+        [datetime]$StartTime = (Get-Date)
     )
 
     # Extract the numeric value (supporting decimals) and the unit
@@ -21,12 +24,13 @@ function Get-PastTime {
         }
     }
 
-    # Calculate the past time
-    $absoluteTime = (Get-Date) - $timeSpan
+    # Calculate the past time from the specified start time
+    $absoluteTime = $StartTime - $timeSpan
 
     # Output the results
     [PSCustomObject]@{
         InputRelativeTime = $RelativeTime
+        StartTime         = $StartTime
         AbsoluteTime      = $absoluteTime
         FormattedString   = $absoluteTime.ToString("yyyy-MM-dd HH:mm:ss.fff")
         EpochSeconds      = ([datetimeoffset]$absoluteTime).ToUnixTimeSeconds()
