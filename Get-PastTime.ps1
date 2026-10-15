@@ -1,3 +1,14 @@
+
+# Get-PastTime Usage:
+#
+# 2 hours before a specific date and time
+# Get-PastTime "2h" -StartTime "2026-12-25 15:00:00"
+#
+# 0.5 days (12 hours) before yesterday
+# $yesterday = (Get-Date).AddDays(-1)
+# Get-PastTime "0.5d" -StartTime $yesterday
+
+
 function Get-PastTime {
     [CmdletBinding()]
     param(
